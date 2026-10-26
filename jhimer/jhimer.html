@@ -1,0 +1,2529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0d1f1d" />
+<title>Jhimer John Sablaya — Web Developer Portfolio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================
+   0. TOKENS
+   ========================================================== */
+:root{
+  --gold:#e6c670;
+  --gold-hi:#ffeaa7;
+  --gold-dim:#b99447;
+  --mana:#8ef6ff;
+  --parchment:#f6ecd7;
+  --parchment-2:#e0cba0;
+  --ink:#33210f;
+
+  --page-w: min(360px, 33vw, 42vh);
+  --page-h: calc(var(--page-w) * 1.42);
+
+  --header-h: 62px;
+  --footer-h: 74px;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+html,body{
+  width:100%; height:100%;
+  overflow:hidden;
+  overscroll-behavior:none;
+}
+
+body{
+  font-family:'Cormorant Garamond', serif;
+  background:#07120f;
+  color:#fff;
+  -webkit-tap-highlight-color:transparent;
+  -webkit-font-smoothing:antialiased;
+  user-select:none;
+}
+
+/* ==========================================================
+   1. ENVIRONMENT
+   ========================================================== */
+.environment{
+  position:fixed; inset:0;
+  z-index:0;
+  overflow:hidden;
+  background:#0d2b22;
+}
+
+.env-image{
+  position:absolute; inset:-2%;
+  background-image:url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1600&q=70');
+  background-size:cover;
+  background-position:center 62%;
+  filter:saturate(1.18) contrast(1.04) brightness(.86);
+}
+
+.env-tint{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(180deg,
+      rgba(60,150,148,.55) 0%,
+      rgba(120,205,158,.26) 30%,
+      rgba(30,92,60,.48) 62%,
+      rgba(6,26,18,.90) 100%);
+}
+
+.env-glow{
+  position:absolute;
+  top:-20%; left:50%;
+  width:110vw; height:66vh;
+  transform:translateX(-50%);
+  background:radial-gradient(ellipse at center,
+    rgba(255,252,215,.62) 0%,
+    rgba(180,240,205,.20) 45%,
+    transparent 72%);
+  pointer-events:none;
+}
+
+.scene-svg{
+  position:absolute;
+  bottom:0; left:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  pointer-events:none;
+}
+
+.env-vignette{
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 45%,
+    transparent 30%,
+    rgba(0,20,12,.30) 72%,
+    rgba(0,10,6,.78) 100%);
+  pointer-events:none;
+}
+
+.particles{ position:absolute; inset:0; pointer-events:none; }
+.particle{
+  position:absolute;
+  border-radius:50%;
+  background:radial-gradient(circle,#fff 8%, var(--mana) 55%, transparent 100%);
+  opacity:.65;
+  will-change:transform;
+  animation:floatUp linear infinite;
+}
+@keyframes floatUp{
+  0%   { transform:translateY(104vh) scale(.4); opacity:0; }
+  15%  { opacity:.8; }
+  85%  { opacity:.75; }
+  100% { transform:translateY(-12vh) scale(1.2); opacity:0; }
+}
+
+/* ==========================================================
+   2. HEADER
+   ========================================================== */
+.game-header{
+  position:fixed;
+  top:0; left:0; right:0;
+  height:var(--header-h);
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:0 20px;
+  background:linear-gradient(180deg,
+    rgba(8,20,17,.95) 0%,
+    rgba(8,20,17,.60) 72%,
+    transparent 100%);
+  border-bottom:1px solid rgba(230,198,112,.28);
+}
+
+.hud-brand{ display:flex; align-items:center; gap:12px; min-width:0; }
+
+.hud-crest{
+  flex:none;
+  width:34px; height:34px;
+  border:2px solid var(--gold);
+  transform:rotate(45deg);
+  display:grid; place-items:center;
+  background:rgba(230,198,112,.14);
+  box-shadow:0 0 10px rgba(230,198,112,.45);
+}
+.hud-crest span{
+  transform:rotate(-45deg);
+  font-family:'Cinzel Decorative',cursive;
+  font-size:1rem;
+  color:var(--gold-hi);
+  line-height:1;
+}
+
+.hud-titles{ min-width:0; }
+.hud-title{
+  font-family:'Cinzel',serif;
+  font-weight:700;
+  font-size:1rem;
+  letter-spacing:2.2px;
+  color:var(--gold);
+  text-shadow:0 2px 8px rgba(0,0,0,.85);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.hud-sub{
+  font-family:'Cinzel',serif;
+  font-size:.56rem;
+  letter-spacing:2px;
+  color:#9fd8c0;
+  opacity:.85;
+  white-space:nowrap;
+}
+
+/* Center the stats pill perfectly */
+.hud-stats{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%, -50%);
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.hud-pill{
+  font-family:'Cinzel',serif;
+  font-size:.7rem;
+  letter-spacing:1.3px;
+  color:#d6f5e6;
+  padding:5px 13px;
+  border-radius:20px;
+  border:1px solid rgba(230,198,112,.35);
+  background:rgba(0,0,0,.45);
+  white-space:nowrap;
+}
+.hud-pill b{ color:var(--gold); font-weight:700; }
+
+.hud-actions{ display:flex; align-items:center; gap:10px; }
+
+.btn-hud{
+  font-family:'Cinzel',serif;
+  font-size:.72rem;
+  letter-spacing:1.5px;
+  padding:8px 15px;
+  border-radius:6px;
+  cursor:pointer;
+  color:var(--gold);
+  border:1.5px solid var(--gold);
+  background:linear-gradient(135deg,#2b1d12 0%,#150d08 100%);
+  box-shadow:0 0 12px rgba(230,198,112,.20);
+  transition:background .25s ease, color .25s ease, transform .25s ease;
+  white-space:nowrap;
+}
+.btn-hud:hover{
+  background:var(--gold);
+  color:#150d08;
+  transform:translateY(-1px);
+}
+
+/* ==========================================================
+   3. CHAPTER DRAWER
+   ========================================================== */
+.drawer-backdrop{
+  position:fixed; inset:0;
+  background:rgba(2,10,8,.66);
+  opacity:0; visibility:hidden;
+  transition:opacity .32s ease, visibility .32s;
+  z-index:140;
+}
+.drawer-backdrop.show{ opacity:1; visibility:visible; }
+
+.chapter-drawer{
+  position:fixed;
+  top:0; right:0;
+  width:min(330px, 88vw);
+  height:100%;
+  z-index:150;
+  transform:translateX(105%);
+  transition:transform .42s cubic-bezier(.22,1,.36,1);
+  padding:calc(var(--header-h) + 14px) 20px 24px;
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+  overflow-y:auto;
+  background:linear-gradient(180deg, rgba(14,26,22,.98) 0%, rgba(8,15,13,1) 100%);
+  border-left:2px solid var(--gold);
+  box-shadow:-14px 0 42px rgba(0,0,0,.8);
+}
+.chapter-drawer.open{ transform:translateX(0); }
+
+.drawer-close{
+  position:absolute;
+  top:14px; right:16px;
+  width:32px; height:32px;
+  border-radius:50%;
+  cursor:pointer;
+  color:var(--gold);
+  border:1px solid var(--gold);
+  background:transparent;
+  font-size:.9rem;
+  transition:.25s;
+}
+.drawer-close:hover{ background:var(--gold); color:#140c07; }
+
+.drawer-heading{
+  font-family:'Cinzel Decorative',cursive;
+  font-size:1.05rem;
+  letter-spacing:1px;
+  color:var(--gold);
+  text-align:center;
+  padding-bottom:11px;
+  margin-bottom:4px;
+  border-bottom:1px solid rgba(230,198,112,.28);
+}
+.drawer-note{
+  font-family:'Cinzel',serif;
+  font-size:.58rem;
+  letter-spacing:2px;
+  text-align:center;
+  color:#7fb59b;
+  margin-bottom:6px;
+}
+
+.chapter-btn{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  width:100%;
+  padding:11px 14px;
+  text-align:left;
+  cursor:pointer;
+  font-family:'Cinzel',serif;
+  font-size:.76rem;
+  letter-spacing:.5px;
+  color:#d6e6dd;
+  border-radius:6px;
+  border:1px solid rgba(230,198,112,.24);
+  background:rgba(255,255,255,.035);
+  transition:background .22s ease, border-color .22s ease, transform .22s ease;
+}
+.chapter-btn .idx{
+  font-size:.6rem;
+  letter-spacing:1.6px;
+  color:#86bda1;
+  display:block;
+  margin-top:2px;
+}
+.chapter-btn .pin{ color:var(--gold-dim); font-size:.7rem; }
+.chapter-btn:hover,
+.chapter-btn.active{
+  background:rgba(230,198,112,.18);
+  border-color:var(--gold);
+  color:var(--gold-hi);
+  transform:translateX(-4px);
+}
+.chapter-btn.active .idx{ color:#ffe9b0; }
+.chapter-btn.active .pin{ color:var(--gold-hi); }
+
+/* ==========================================================
+   4. STAGE / LEVITATION RIG
+   ========================================================== */
+.stage{
+  position:fixed;
+  inset:0;
+  z-index:10;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  padding:calc(var(--header-h) + 8px) 12px calc(var(--footer-h) + 10px);
+  perspective:2400px;
+}
+
+.levitation-rig{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transform-style:preserve-3d;
+  animation:floatBook 6s ease-in-out infinite;
+}
+@keyframes floatBook{
+  0%,100%{ transform:translateY(0) }
+  50%    { transform:translateY(-14px) }
+}
+
+/* ---- MAGIC SPELL CIRCLE ---- */
+.spell-wrap{
+  position:absolute;
+  width:min(720px, 96vw, 86vh);
+  aspect-ratio:1/1;
+  transform:translateZ(-170px);
+  pointer-events:none;
+  display:grid;
+  place-items:center;
+}
+
+.spell-glow{
+  position:absolute;
+  inset:-6%;
+  border-radius:50%;
+  background:radial-gradient(circle,
+    rgba(142,246,255,.26) 0%,
+    rgba(230,198,112,.16) 40%,
+    rgba(142,246,255,.05) 58%,
+    transparent 72%);
+  opacity:.85;
+  transition:opacity .45s ease, transform .5s ease;
+}
+.spell-glow.burst{
+  opacity:1;
+  transform:scale(1.18);
+}
+
+.spell-ring{
+  position:absolute;
+  inset:0;
+  width:100%; height:100%;
+  will-change:transform;
+}
+.spell-ring svg{ width:100%; height:100%; overflow:visible; display:block; }
+.spell-ring.cw { animation:spinCW 46s linear infinite; }
+.spell-ring.ccw{ animation:spinCCW 30s linear infinite; }
+
+@keyframes spinCW { to{ transform:rotate(360deg) } }
+@keyframes spinCCW{ to{ transform:rotate(-360deg) } }
+
+.spell-flash{
+  position:absolute;
+  width:min(880px,120vw);
+  aspect-ratio:1;
+  border-radius:50%;
+  background:radial-gradient(circle,
+    rgba(255,255,235,.85) 0%,
+    rgba(255,236,160,.32) 26%,
+    rgba(142,246,255,.16) 48%,
+    transparent 68%);
+  opacity:0;
+  pointer-events:none;
+  transform:translateZ(-200px);
+}
+.spell-flash.fire{ animation:flashPop .75s ease-out; }
+@keyframes flashPop{
+  0%  { opacity:0; transform:translateZ(-200px) scale(.7) }
+  28% { opacity:.95 }
+  100%{ opacity:0; transform:translateZ(-200px) scale(1.28) }
+}
+
+.book-shadow{
+  position:absolute;
+  bottom:-9%;
+  left:50%;
+  width:120%;
+  height:52px;
+  transform:translate(-50%,0) translateZ(-90px);
+  background:radial-gradient(ellipse at center, rgba(0,0,0,.6) 0%, rgba(0,0,0,0) 72%);
+  pointer-events:none;
+}
+
+/* ==========================================================
+   5. THE 3D BOOK
+   ========================================================== */
+.book-clip{
+  position:relative;
+  transform-style:preserve-3d;
+  border-radius:6px;
+}
+
+.book-viewport{
+  position:relative;
+  width:var(--page-w);
+  height:var(--page-h);
+  perspective:2200px;
+  perspective-origin:50% 46%;
+  transform:rotateX(7deg);
+  transform-style:flat;
+  transition:transform .75s cubic-bezier(.4,0,.2,1);
+  border-radius:6px;
+}
+
+.book-viewport.open-spread{ transform:translateX(50%) rotateX(7deg); }
+.book-viewport.closed-back{ transform:translateX(100%) rotateX(7deg); }
+
+.book-viewport::before{
+  content:'';
+  position:absolute;
+  top:2%; bottom:2%; left:-4px;
+  width:10px;
+  border-radius:4px;
+  background:linear-gradient(90deg, rgba(0,0,0,.65), rgba(0,0,0,0) 100%);
+  opacity:0;
+  transition:opacity .5s ease .12s;
+  pointer-events:none;
+  z-index:250;
+}
+.book-viewport.open-spread::before,
+.book-viewport.closed-back::before{ opacity:1; }
+
+.leaf{
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  transform-origin:left center;
+  transform-style:preserve-3d;
+  transition:transform .85s cubic-bezier(.42,0,.18,1);
+  will-change:transform;
+  cursor:pointer;
+}
+.leaf.flipped{ transform:rotateY(-180deg); }
+.leaf.turning{ z-index:90 !important; }
+
+.leaf-inner{
+  position:absolute;
+  inset:0;
+  transform-style:preserve-3d;
+  transform:translateZ(0);
+}
+.leaf.turning .leaf-inner{ animation:leafLift .85s cubic-bezier(.42,0,.18,1); }
+@keyframes leafLift{
+  0%  { transform:translateZ(0) }
+  45% { transform:translateZ(24px) }
+  100%{ transform:translateZ(0) }
+}
+
+.page-face{
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  border-radius:3px 11px 11px 3px;
+  box-shadow:0 6px 22px rgba(0,0,0,.45);
+}
+.page-back{
+  transform:rotateY(180deg);
+  border-radius:11px 3px 3px 11px;
+}
+
+.face-shade{
+  position:absolute; inset:0;
+  pointer-events:none;
+  opacity:0;
+  z-index:20;
+}
+.page-front .face-shade{
+  background:linear-gradient(90deg, rgba(20,10,0,.60) 0%, rgba(20,10,0,.08) 42%, rgba(20,10,0,0) 70%);
+}
+.page-back .face-shade{
+  background:linear-gradient(270deg, rgba(20,10,0,.60) 0%, rgba(20,10,0,.08) 42%, rgba(20,10,0,0) 70%);
+}
+.leaf.turning .face-shade{ animation:shadeSweep .85s ease-in-out; }
+@keyframes shadeSweep{
+  0%  { opacity:0 }
+  38% { opacity:1 }
+  72% { opacity:.4 }
+  100%{ opacity:0 }
+}
+
+/* ==========================================================
+   6. BOOK COVER
+   ========================================================== */
+.grimoire-cover{
+  padding:clamp(12px,3.4%,22px);
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:var(--gold);
+  background:
+    radial-gradient(circle at 50% 42%, #5a2c18 0%, #33170c 52%, #170a04 100%);
+  border:3px solid #8c6b32;
+  box-shadow:
+    inset 0 0 40px rgba(0,0,0,.92),
+    inset 0 0 16px rgba(230,198,112,.32),
+    0 16px 40px rgba(0,0,0,.72);
+}
+.grimoire-cover::after{
+  content:'';
+  position:absolute; inset:0;
+  pointer-events:none;
+  opacity:.20;
+  background-image:
+    repeating-linear-gradient(48deg, rgba(255,220,160,.07) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(-48deg, rgba(0,0,0,.14) 0 2px, transparent 2px 6px);
+}
+.grimoire-cover::before{
+  content:'';
+  position:absolute;
+  top:0; bottom:0; left:11px;
+  width:6px;
+  z-index:5;
+  background:linear-gradient(90deg, rgba(230,198,112,.55), rgba(0,0,0,.85));
+  box-shadow:7px 0 14px rgba(0,0,0,.6);
+}
+
+.cover-frame{
+  position:relative;
+  z-index:2;
+  width:100%; height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:clamp(10px,4%,20px) clamp(8px,3%,16px);
+  border:2px solid var(--gold);
+  outline:1px solid rgba(230,198,112,.38);
+  outline-offset:-7px;
+  background:radial-gradient(circle at 50% 50%, rgba(230,198,112,.10) 0%, transparent 72%);
+}
+
+.cover-runes{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.42rem,1.55vw,.64rem);
+  letter-spacing:2.4px;
+  color:rgba(230,198,112,.78);
+  text-align:center;
+  line-height:1.5;
+}
+
+/* ✦ EMBLEM — static glow */
+.cover-sword{
+  flex:none;
+  height:clamp(70px, 28%, 128px);
+  width:auto;
+  aspect-ratio:3 / 7;
+  filter:
+    drop-shadow(0 0 10px rgba(142,246,255,.50))
+    drop-shadow(0 0 22px rgba(230,198,112,.35));
+}
+.cover-sword svg{ width:100%; height:100%; display:block; overflow:visible; }
+
+.cover-title{
+  font-family:'Cinzel Decorative',cursive;
+  font-size:clamp(1rem,5.2vw,1.7rem);
+  line-height:1.2;
+  color:var(--gold-hi);
+  letter-spacing:1px;
+  text-shadow:0 3px 12px rgba(0,0,0,.95);
+}
+
+.cover-subtitle{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.46rem,1.9vw,.76rem);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:#d9bd85;
+  margin-bottom:4px;
+}
+
+/* Back Cover About Button */
+.back-cover-about {
+  margin-top: 6px;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(.45rem, 1.8vw, .65rem);
+  letter-spacing: 1.5px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  color: var(--gold-hi);
+  border: 1px solid var(--gold);
+  background: rgba(0, 0, 0, .5);
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease, transform .25s ease;
+  box-shadow: 0 0 10px rgba(230,198,112,.2);
+}
+.back-cover-about:hover {
+  background: var(--gold);
+  color: #140c07;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================
+   7. PARCHMENT PAGES
+   ========================================================== */
+.parchment-page{
+  color:var(--ink);
+  padding:clamp(10px,3.6%,20px);
+  border:1px solid #bda06f;
+  background:
+    radial-gradient(circle at 50% 45%, var(--parchment) 52%, var(--parchment-2) 100%);
+  box-shadow:inset 0 0 30px rgba(107,76,35,.30);
+}
+.page-front.parchment-page{
+  background:
+    linear-gradient(90deg, rgba(66,42,18,.28) 0%, rgba(66,42,18,0) 13%),
+    radial-gradient(circle at 50% 45%, var(--parchment) 52%, var(--parchment-2) 100%);
+}
+.page-back.parchment-page{
+  background:
+    linear-gradient(270deg, rgba(66,42,18,.28) 0%, rgba(66,42,18,0) 13%),
+    radial-gradient(circle at 50% 45%, var(--parchment) 52%, var(--parchment-2) 100%);
+}
+
+.parchment-page .paper-grain{
+  position:absolute; inset:0;
+  pointer-events:none;
+  opacity:.45;
+  background-image:
+    radial-gradient(rgba(140,107,59,.12) 1px, transparent 1px),
+    radial-gradient(rgba(140,107,59,.08) 1px, transparent 1px);
+  background-size:7px 7px, 13px 13px;
+  background-position:0 0, 4px 6px;
+}
+
+.page-border{
+  position:relative;
+  z-index:2;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:6px;
+  padding:clamp(8px,3.2%,15px);
+  border:1.5px solid #8c6b3b;
+  border-radius:2px;
+}
+
+.page-header-tag{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.44rem,1.75vw,.64rem);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#7a582b;
+  text-align:center;
+  padding-bottom:5px;
+  border-bottom:1px solid rgba(140,107,59,.35);
+}
+
+.photo-frame-container{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:6px 2px;
+  min-height:0;
+}
+
+.magic-photo-frame{
+  position:relative;
+  width:100%;
+  flex:1;
+  min-height:0;
+  border:3px solid #694b24;
+  outline:1px solid #b89458;
+  outline-offset:-6px;
+  border-radius:4px;
+  overflow:hidden;
+  background:#2b1d12;
+  box-shadow:0 8px 20px rgba(43,24,16,.42);
+}
+.magic-photo-frame::after{
+  content:'';
+  position:absolute; inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg, rgba(255,240,200,.14) 0%, transparent 26%, rgba(40,20,0,.22) 100%);
+}
+.magic-photo-frame img{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+  filter:sepia(.16) contrast(1.05) saturate(1.05);
+  transition:transform .5s cubic-bezier(.2,.8,.3,1);
+}
+.magic-photo-frame:hover img{ transform:scale(1.05); }
+
+.photo-caption{
+  font-style:italic;
+  font-size:clamp(.52rem,2.15vw,.88rem);
+  line-height:1.35;
+  color:#5c4220;
+  text-align:center;
+  flex:none;
+}
+
+/* Subtitle for roles under the photo */
+.photo-roles {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(.4rem, 1.5vw, .6rem);
+  letter-spacing: .5px;
+  color: #7a582b;
+  text-align: center;
+  text-transform: uppercase;
+  flex: none;
+  margin-top: -2px;
+  font-weight: 600;
+}
+
+/* Name plate used on chapter-left pages */
+.photo-name{
+  font-family:'Cinzel Decorative',cursive;
+  font-size:clamp(.6rem,2.4vw,.95rem);
+  letter-spacing:1px;
+  color:#3a220d;
+  text-align:center;
+  flex:none;
+  line-height:1.2;
+}
+
+.story-top-section{
+  flex:none;
+  text-align:center;
+  padding:2px 0 8px;
+  border-bottom:2px double #9e7b47;
+}
+.chapter-number{
+  display:block;
+  font-family:'Cinzel',serif;
+  font-size:clamp(.44rem,1.7vw,.64rem);
+  letter-spacing:2.4px;
+  color:#8c5d26;
+  margin-bottom:3px;
+}
+.story-title{
+  font-family:'Cinzel Decorative',cursive;
+  font-size:clamp(.82rem,3.9vw,1.3rem);
+  line-height:1.18;
+  color:#3a220d;
+}
+
+.story-body{
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
+  padding:9px 3px;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  font-size:clamp(.56rem,2.32vw,.96rem);
+  line-height:1.5;
+  color:#2f1f10;
+  text-align:justify;
+  user-select:text;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(140,107,59,.55) transparent;
+}
+.story-body::-webkit-scrollbar{ width:4px; }
+.story-body::-webkit-scrollbar-thumb{
+  background:rgba(140,107,59,.55);
+  border-radius:4px;
+}
+.story-body p::first-letter{
+  font-family:'Cinzel Decorative',cursive;
+  font-size:2.05em;
+  float:left;
+  line-height:.82;
+  margin:2px 6px 0 0;
+  color:#7a4613;
+}
+
+/* ---- Education / contact list ---- */
+.edu-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.edu-item{
+  border-left:2px solid #b89458;
+  padding-left:8px;
+}
+.edu-item .edu-year{
+  display:block;
+  font-family:'Cinzel',serif;
+  font-size:clamp(.42rem,1.6vw,.62rem);
+  letter-spacing:1.2px;
+  color:#8c5d26;
+}
+.edu-item .edu-school{
+  display:block;
+  font-family:'Cinzel',serif;
+  font-weight:600;
+  font-size:clamp(.52rem,2vw,.8rem);
+  line-height:1.25;
+  color:#3a220d;
+  margin-top:1px;
+  word-break:break-word;
+}
+.edu-item .edu-note{
+  display:block;
+  font-style:italic;
+  font-size:clamp(.5rem,1.95vw,.8rem);
+  line-height:1.35;
+  color:#5c4220;
+  margin-top:2px;
+}
+
+/* ---- Skill list ---- */
+.spell-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.spell-group .spell-head{
+  display:block;
+  font-family:'Cinzel',serif;
+  font-size:clamp(.44rem,1.7vw,.64rem);
+  letter-spacing:1.4px;
+  text-transform:uppercase;
+  color:#8c5d26;
+  border-bottom:1px solid rgba(140,107,59,.35);
+  padding-bottom:2px;
+  margin-bottom:3px;
+}
+.spell-group ul{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.spell-group li{
+  font-size:clamp(.52rem,2vw,.84rem);
+  line-height:1.35;
+  color:#2f1f10;
+  padding-left:12px;
+  position:relative;
+}
+.spell-group li::before{
+  content:'▸';
+  position:absolute;
+  left:0; top:0;
+  font-size:.72em;
+  color:#a87b3a;
+  line-height:1.9;
+}
+
+.skill-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-top:2px;
+}
+.skill-tag{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.4rem,1.55vw,.6rem);
+  letter-spacing:.4px;
+  padding:2px 7px;
+  border-radius:4px;
+  color:#4a2e10;
+  border:1px solid #8c6b3b;
+  background:rgba(140,107,59,.16);
+}
+
+.mobile-photo{ display:none; }
+
+.page-footer-num{
+  flex:none;
+  font-family:'Cinzel',serif;
+  font-size:clamp(.44rem,1.7vw,.66rem);
+  letter-spacing:1.4px;
+  color:#7a582b;
+  text-align:center;
+  padding-top:5px;
+  border-top:1px solid rgba(140,107,59,.32);
+}
+
+/* ==========================================================
+   8. NAV CONTROLS
+   ========================================================== */
+.book-controls{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  z-index:30;
+  flex:none;
+}
+
+.nav-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  font-family:'Cinzel',serif;
+  font-size:.8rem;
+  letter-spacing:1.8px;
+  padding:10px 22px;
+  border-radius:30px;
+  color:var(--gold);
+  border:1.5px solid var(--gold);
+  background:linear-gradient(135deg, rgba(34,22,15,.94) 0%, rgba(16,10,7,.97) 100%);
+  box-shadow:0 6px 20px rgba(0,0,0,.6);
+  transition:background .25s ease, color .25s ease, transform .25s ease;
+  white-space:nowrap;
+  text-decoration:none;
+}
+.nav-btn:hover:not(:disabled){
+  background:var(--gold);
+  color:#160d06;
+  transform:translateY(-2px);
+}
+.nav-btn:active:not(:disabled){ transform:translateY(0) scale(.97); }
+.nav-btn:disabled{ opacity:.32; cursor:not-allowed; }
+
+.page-indicator{
+  font-family:'Cinzel',serif;
+  font-size:.72rem;
+  letter-spacing:1.4px;
+  color:var(--gold-hi);
+  padding:8px 18px;
+  border-radius:20px;
+  border:1px solid rgba(230,198,112,.42);
+  background:rgba(9,22,19,.82);
+  white-space:nowrap;
+}
+
+/* ==========================================================
+   9. FOOTER
+   ========================================================== */
+.chapter-footer{
+  position:fixed;
+  left:0; right:0; bottom:0;
+  height:var(--footer-h);
+  z-index:100;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:12px;
+  padding:8px 16px calc(8px + env(safe-area-inset-bottom));
+  background:linear-gradient(0deg,
+    rgba(5,14,11,.97) 0%,
+    rgba(5,14,11,.75) 62%,
+    transparent 100%);
+  border-top:1px solid rgba(230,198,112,.22);
+}
+
+.footer-left{
+  grid-column:1;
+  justify-self:start;
+  display:flex;
+  align-items:center;
+}
+
+.footer-info{
+  grid-column:2;
+  justify-self:center;
+  min-width:0;
+  max-width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:3px;
+  text-align:center;
+  overflow:hidden;
+}
+
+.footer-chapter{
+  font-family:'Cinzel Decorative',cursive;
+  font-size:.92rem;
+  letter-spacing:1.6px;
+  color:var(--gold);
+  text-shadow:0 2px 8px rgba(0,0,0,.9);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:100%;
+}
+.footer-desc{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:.82rem;
+  line-height:1.25;
+  color:#a9d6c1;
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+.footer-rule{
+  width:52px; height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  margin:1px 0 2px;
+  flex:none;
+}
+
+.footer-actions{
+  grid-column:3;
+  justify-self:end;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-shrink:0;
+}
+
+.footer-btn{
+  font-family:'Cinzel',serif;
+  font-size:.6rem;
+  letter-spacing:1px;
+  padding:6px 11px;
+  border-radius:20px;
+  cursor:pointer;
+  color:var(--gold);
+  border:1px solid var(--gold);
+  background:rgba(0,0,0,.55);
+  white-space:nowrap;
+  transition:background .22s ease, color .22s ease, transform .22s ease;
+}
+.footer-btn:hover{
+  background:var(--gold);
+  color:#140c07;
+  transform:translateY(-1px);
+}
+.footer-btn:active{ transform:translateY(0) scale(.97); }
+
+/* ==========================================================
+   10. RESPONSIVE
+   ========================================================== */
+@media (max-width:1100px){
+  .hud-stats{ display:none; }
+}
+
+@media (max-width:820px){
+  :root{
+    --page-w: min(90vw, 400px, 52vh);
+    --page-h: calc(var(--page-w) * 1.5);
+    --header-h: 54px;
+    --footer-h: 66px;
+  }
+
+  .game-header{ padding:0 12px; gap:8px; }
+  .hud-title{ font-size:.78rem; letter-spacing:1.2px; }
+  .hud-sub{ font-size:.48rem; letter-spacing:1.2px; }
+  .hud-crest{ width:28px; height:28px; }
+  .hud-crest span{ font-size:.85rem; }
+  .btn-hud{ font-size:.62rem; padding:7px 11px; letter-spacing:1px; }
+
+  .book-clip{
+    overflow:hidden;
+    border-radius:4px 12px 12px 4px;
+    box-shadow:0 18px 44px rgba(0,0,0,.7);
+  }
+  .book-viewport{ perspective:1800px; }
+  .book-viewport.open-spread{ transform:rotateX(6deg); }
+  .book-viewport.closed-back{ transform:translateX(100%) rotateX(6deg); }
+  .book-viewport::before{ display:none; }
+
+  .spell-wrap{
+    width:min(560px, 130vw, 76vh);
+    transform:translateZ(-120px);
+  }
+
+  .mobile-photo{
+    display:block;
+    flex:none;
+    width:100%;
+    height:32%;
+    min-height:70px;
+    border:2.5px solid #694b24;
+    outline:1px solid #b89458;
+    outline-offset:-5px;
+    border-radius:4px;
+    overflow:hidden;
+    margin-bottom:6px;
+    background:#2b1d12;
+    box-shadow:0 5px 14px rgba(43,24,16,.4);
+  }
+  .mobile-photo img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+    filter:sepia(.14) contrast(1.05);
+  }
+
+  .story-top-section{ padding:1px 0 6px; }
+  .story-body{ font-size:clamp(.64rem, 2.9vw, .86rem); line-height:1.45; }
+
+  .book-controls{ gap:9px; }
+  .nav-btn{ padding:9px 16px; font-size:.66rem; letter-spacing:1.1px; }
+  .page-indicator{ font-size:.58rem; padding:7px 12px; letter-spacing:.7px; }
+
+  .footer-chapter{ font-size:.72rem; letter-spacing:1.1px; }
+  .footer-desc{ font-size:.62rem; }
+  .chapter-footer{ gap:8px; padding:6px 10px calc(6px + env(safe-area-inset-bottom)); }
+  .footer-btn{ font-size:.5rem; padding:5px 8px; letter-spacing:.4px; }
+  .footer-actions{ gap:4px; }
+
+  .cover-sword{ height:clamp(60px, 26%, 100px); }
+}
+
+@media (max-width:600px){
+  .footer-left{ display:none; }
+  .chapter-footer{
+    display:flex;
+    justify-content:space-between;
+  }
+  .footer-info{ flex:1; align-items:flex-start; text-align:left; }
+  .footer-info .footer-chapter,
+  .footer-info .footer-desc { text-align:left; }
+  .footer-rule { background:linear-gradient(90deg, var(--gold-dim), transparent); }
+}
+
+@media (max-width:400px){
+  :root{
+    --page-w: min(92vw, 360px, 50vh);
+    --page-h: calc(var(--page-w) * 1.52);
+  }
+  .hud-sub{ display:none; }
+  .nav-btn{ padding:8px 13px; font-size:.6rem; }
+  .page-indicator{ font-size:.54rem; padding:6px 10px; }
+  .footer-desc{ font-size:.56rem; }
+  .footer-chapter{ font-size:.66rem; }
+  .footer-btn{ font-size:.44rem; padding:4px 6px; letter-spacing:0; }
+}
+
+@media (max-height:520px) and (orientation:landscape){
+  :root{
+    --page-w: min(210px, 20vw, 52vh);
+    --page-h: calc(var(--page-w) * 1.42);
+    --header-h: 48px;
+    --footer-h: 54px;
+  }
+  .hud-stats, .hud-sub{ display:none; }
+  .footer-desc, .footer-left{ display:none; }
+  .nav-btn{ padding:7px 14px; font-size:.64rem; }
+  .footer-btn{ font-size:.48rem; padding:4px 7px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .levitation-rig, .spell-ring, .particle{
+    animation:none !important;
+  }
+}
+
+/* ==========================================================
+   11. CONTACT + ABOUT MODALS
+   ========================================================== */
+.contact-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:300;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+  background:rgba(2,10,8,.80);
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .3s ease, visibility .3s;
+}
+.contact-backdrop.show{ opacity:1; visibility:visible; }
+
+.contact-card{
+  position:relative;
+  width:min(430px, 92vw);
+  max-height:86vh;
+  overflow-y:auto;
+  padding:clamp(22px,5.5vw,34px) clamp(16px,5vw,28px) clamp(18px,4.5vw,26px);
+  text-align:center;
+  border-radius:14px;
+  border:2px solid var(--gold);
+  color:var(--gold);
+  background:
+    radial-gradient(circle at 50% 0%, #54291a 0%, #2a1109 52%, #100603 100%);
+  box-shadow:
+    0 26px 70px rgba(0,0,0,.88),
+    inset 0 0 46px rgba(0,0,0,.9),
+    inset 0 0 12px rgba(230,198,112,.25);
+  transform:translateY(24px) scale(.93);
+  opacity:0;
+  transition:transform .42s cubic-bezier(.2,1.25,.4,1), opacity .32s ease;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(230,198,112,.4) transparent;
+}
+.contact-backdrop.show .contact-card{
+  transform:translateY(0) scale(1);
+  opacity:1;
+}
+.contact-card::-webkit-scrollbar{ width:5px; }
+.contact-card::-webkit-scrollbar-thumb{
+  background:rgba(230,198,112,.4);
+  border-radius:4px;
+}
+
+.contact-card::after{
+  content:'';
+  position:absolute; inset:0;
+  pointer-events:none;
+  border-radius:12px;
+  opacity:.16;
+  background-image:
+    repeating-linear-gradient(48deg, rgba(255,220,160,.10) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(-48deg, rgba(0,0,0,.16) 0 2px, transparent 2px 6px);
+}
+
+.contact-close{
+  position:absolute;
+  top:10px; right:12px;
+  z-index:6;
+  width:32px; height:32px;
+  border-radius:50%;
+  cursor:pointer;
+  color:var(--gold);
+  border:1px solid rgba(230,198,112,.65);
+  background:rgba(0,0,0,.4);
+  font-size:.85rem;
+  line-height:1;
+  transition:.25s ease;
+}
+.contact-close:hover{
+  background:var(--gold);
+  color:#140c07;
+  transform:rotate(90deg);
+}
+
+.contact-frame{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  padding:clamp(16px,4.5vw,24px) clamp(12px,4vw,20px);
+  border:1px solid rgba(230,198,112,.36);
+  outline:1px solid rgba(230,198,112,.18);
+  outline-offset:-7px;
+  border-radius:6px;
+  background:radial-gradient(circle at 50% 38%, rgba(230,198,112,.10) 0%, transparent 70%);
+}
+
+.contact-rune{
+  font-family:'Cinzel',serif;
+  font-size:.56rem;
+  letter-spacing:2.6px;
+  color:rgba(230,198,112,.72);
+  text-align:center;
+}
+
+.about-title {
+  font-family:'Cinzel Decorative', cursive;
+  font-size:1.6rem;
+  letter-spacing:2px;
+  color:var(--gold-hi);
+  text-shadow:0 2px 10px rgba(0,0,0,0.9), 0 0 18px rgba(230,198,112,0.4);
+  margin: 4px 0 8px;
+}
+
+.contact-shield{
+  flex:none;
+  width:62px;
+  height:76px;
+  filter:
+    drop-shadow(0 0 10px rgba(142,246,255,.50))
+    drop-shadow(0 0 22px rgba(230,198,112,.35));
+}
+.contact-shield svg{ width:100%; height:100%; display:block; overflow:visible; }
+
+.about-sword{
+  flex:none;
+  width:52px;
+  height:72px;
+  filter:
+    drop-shadow(0 0 10px rgba(142,246,255,.50))
+    drop-shadow(0 0 22px rgba(230,198,112,.35));
+}
+.about-sword svg{ width:100%; height:100%; display:block; overflow:visible; }
+
+.contact-name{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.05rem;
+  letter-spacing:.4px;
+  color:#f0d9a3;
+  line-height:1.3;
+}
+
+.about-class{
+  font-family:'Cinzel',serif;
+  font-size:.62rem;
+  letter-spacing:2px;
+  color:#cfe9db;
+  text-transform:uppercase;
+}
+
+.contact-gmail{
+  display:inline-block;
+  font-family:'Cinzel Decorative',cursive;
+  font-size:clamp(.9rem,4vw,1.3rem);
+  line-height:1.28;
+  letter-spacing:.4px;
+  color:var(--gold-hi);
+  text-decoration:none;
+  word-break:break-word;
+  user-select:text;
+  text-shadow:0 2px 10px rgba(0,0,0,.9);
+  transition:color .25s ease;
+}
+.contact-gmail:hover{ color:#ffffff; }
+
+.contact-rule{
+  position:relative;
+  width:74%;
+  height:1px;
+  margin:2px 0;
+  background:linear-gradient(90deg, transparent, rgba(230,198,112,.65), transparent);
+  flex:none;
+}
+.contact-rule::after{
+  content:'';
+  position:absolute;
+  top:50%; left:50%;
+  width:6px; height:6px;
+  transform:translate(-50%,-50%) rotate(45deg);
+  background:var(--gold);
+}
+
+.contact-desc{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.94rem;
+  line-height:1.52;
+  color:#cfe9db;
+  text-align:center;
+  max-width:34ch;
+  user-select:text;
+}
+
+.about-tags{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:6px;
+  margin-top:4px;
+}
+.about-tag{
+  font-family:'Cinzel',serif;
+  font-size:.55rem;
+  letter-spacing:.6px;
+  padding:3px 9px;
+  border-radius:12px;
+  color:#f0d9a3;
+  border:1px solid rgba(230,198,112,.5);
+  background:rgba(230,198,112,.10);
+}
+
+.contact-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  margin-top:4px;
+}
+.contact-actions .nav-btn{ font-size:.72rem; padding:10px 20px; }
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     1. ENVIRONMENT
+     ========================================================= -->
+<div class="environment">
+  <div class="env-image"></div>
+  <div class="env-tint"></div>
+  <div class="env-glow"></div>
+
+  <svg class="scene-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="forestHill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"  stop-color="#1e4d32"/>
+        <stop offset="100%" stop-color="#0a2115"/>
+      </linearGradient>
+    </defs>
+
+    <g fill="#123b25" opacity=".9">
+      <polygon points="40,515 2,690 78,690"/>
+      <polygon points="98,470 48,695 148,695"/>
+      <polygon points="165,535 122,715 208,715"/>
+      <polygon points="236,500 186,705 286,705"/>
+      <polygon points="300,560 258,730 342,730"/>
+      <polygon points="1195,505 1148,708 1242,708"/>
+      <polygon points="1268,462 1215,695 1321,695"/>
+      <polygon points="1345,500 1292,712 1398,712"/>
+      <polygon points="1410,445 1362,700 1458,700"/>
+    </g>
+
+    <path d="M0,690 Q380,615 720,695 T1440,655 L1440,900 L0,900 Z" fill="url(#forestHill)"/>
+  </svg>
+
+  <div class="env-vignette"></div>
+  <div class="particles" id="particles"></div>
+</div>
+
+<!-- =========================================================
+     2. HEADER
+     ========================================================= -->
+<header class="game-header">
+  <div class="hud-brand">
+    <div class="hud-crest"><span>✦</span></div>
+    <div class="hud-titles">
+      <div class="hud-title">JHIMER JOHN SABLAYA</div>
+      <div class="hud-sub">WEB DEVELOPER&nbsp;•&nbsp;BSIT</div>
+    </div>
+  </div>
+
+  <div class="hud-stats">
+    <div class="hud-pill">ROLE: <b>WEB DEVELOPER</b></div>
+  </div>
+
+  <div class="hud-actions">
+    <button class="btn-hud" id="openMenuBtn" type="button"><span>☰</span>&nbsp;CONTENTS</button>
+  </div>
+</header>
+
+<!-- =========================================================
+     3. CONTENTS DRAWER
+     ========================================================= -->
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+<aside class="chapter-drawer" id="chapterDrawer" aria-label="Portfolio contents">
+  <button class="drawer-close" id="closeMenuBtn" type="button" aria-label="Close menu">✕</button>
+  <div class="drawer-heading">Portfolio Contents</div>
+  <div class="drawer-note">SELECT A SECTION TO VIEW</div>
+
+  <button class="chapter-btn active" type="button" data-spread="0">
+    <span><span class="idx">00</span>Cover</span><span class="pin">✦</span>
+  </button>
+  <button class="chapter-btn" type="button" data-spread="1">
+    <span><span class="idx">01</span>Home</span><span class="pin">Page 1</span>
+  </button>
+  <button class="chapter-btn" type="button" data-spread="2">
+    <span><span class="idx">02</span>About Me</span><span class="pin">Page 2</span>
+  </button>
+  <button class="chapter-btn" type="button" data-spread="3">
+    <span><span class="idx">03</span>Technical Skills</span><span class="pin">Page 3</span>
+  </button>
+  <button class="chapter-btn" type="button" data-spread="4">
+    <span><span class="idx">04</span>Education</span><span class="pin">Page 4</span>
+  </button>
+  <button class="chapter-btn" type="button" data-spread="5">
+    <span><span class="idx">05</span>Featured Project</span><span class="pin">Page 5</span>
+  </button>
+  <button class="chapter-btn" type="button" data-spread="6">
+    <span><span class="idx">06</span>OJT &amp; Career Objective</span><span class="pin">Page 6</span>
+  </button>
+  <button class="chapter-btn" type="button" data-spread="7">
+    <span><span class="idx">07</span>Contact</span><span class="pin">Page 7</span>
+  </button>
+  <button class="chapter-btn" type="button" data-spread="8">
+    <span><span class="idx">08</span>Back Cover</span><span class="pin">✦</span>
+  </button>
+
+  <div style="height:8px"></div>
+
+  <button class="chapter-btn" type="button" id="drawerAboutBtn">
+    <span><span class="idx">⚔</span>ABOUT ME</span><span class="pin">✦</span>
+  </button>
+
+  <button class="chapter-btn" type="button" id="drawerContactBtn">
+    <span><span class="idx">✉</span>CONTACT</span><span class="pin">✦</span>
+  </button>
+</aside>
+
+<!-- =========================================================
+     4. STAGE — FLOATING 3D BOOK
+     ========================================================= -->
+<main class="stage">
+  <div class="levitation-rig">
+
+    <div class="spell-wrap" aria-hidden="true">
+      <div class="spell-glow" id="spellGlow"></div>
+
+      <div class="spell-ring cw">
+        <svg viewBox="0 0 600 600">
+          <defs>
+            <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fff6c8"/>
+              <stop offset="50%" stop-color="#e6c670"/>
+              <stop offset="100%" stop-color="#8ef6ff"/>
+            </linearGradient>
+          </defs>
+          <g fill="none" stroke="url(#g1)">
+            <circle cx="300" cy="300" r="284" stroke-width="2.4" stroke-dasharray="16 12"/>
+            <circle cx="300" cy="300" r="262" stroke-width="1" opacity=".7"/>
+            <circle cx="300" cy="300" r="222" stroke-width="2"/>
+            <polygon points="300,78 492,412 108,412" stroke-width="1.7"/>
+            <polygon points="300,522 492,188 108,188" stroke-width="1.7"/>
+            <rect x="158" y="158" width="284" height="284" stroke-width="1.5" transform="rotate(45 300 300)"/>
+          </g>
+          <g fill="#8ef6ff">
+            <circle cx="300" cy="16" r="5"/>
+            <circle cx="300" cy="584" r="5"/>
+            <circle cx="16" cy="300" r="5" fill="#fff6c8"/>
+            <circle cx="584" cy="300" r="5" fill="#fff6c8"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="spell-ring ccw">
+        <svg viewBox="0 0 600 600">
+          <defs>
+            <linearGradient id="g2" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#8ef6ff"/>
+              <stop offset="55%" stop-color="#e6c670"/>
+              <stop offset="100%" stop-color="#fff6c8"/>
+            </linearGradient>
+          </defs>
+          <g fill="none" stroke="url(#g2)">
+            <rect x="158" y="158" width="284" height="284" stroke-width="1.5"/>
+            <circle cx="300" cy="300" r="152" stroke-width="1.2" stroke-dasharray="9 9"/>
+            <circle cx="300" cy="300" r="104" stroke-width="1.6"/>
+            <circle cx="300" cy="300" r="64" stroke-width="2"/>
+            <polygon points="300,196 390,352 210,352" stroke-width="1.3"/>
+            <polygon points="300,404 390,248 210,248" stroke-width="1.3"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="spell-flash" id="spellFlash" aria-hidden="true"></div>
+    <div class="book-shadow" aria-hidden="true"></div>
+
+    <div class="book-clip">
+      <div class="book-viewport" id="bookViewport">
+
+        <!-- ============ LEAF 0 : FRONT COVER / SPREAD 1 LEFT ============ -->
+        <div class="leaf" id="leaf0">
+          <div class="leaf-inner">
+
+            <!-- FRONT COVER -->
+            <div class="page-face page-front grimoire-cover">
+              <div class="cover-frame">
+                <div class="cover-runes">✦ WEB DEVELOPMENT · INFORMATION TECHNOLOGY ✦</div>
+
+                <div class="cover-sword" aria-hidden="true">
+                  <svg viewBox="0 0 60 140">
+                    <defs>
+                      <linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%"   stop-color="#8fb6c9"/>
+                        <stop offset="42%"  stop-color="#f4fbff"/>
+                        <stop offset="58%"  stop-color="#f4fbff"/>
+                        <stop offset="100%" stop-color="#7fa8bd"/>
+                      </linearGradient>
+                      <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%"   stop-color="#8c6b32"/>
+                        <stop offset="45%"  stop-color="#ffeaa7"/>
+                        <stop offset="100%" stop-color="#b99447"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M30 5 L38 24 L38 92 L30 101 L22 92 L22 24 Z"
+                          fill="url(#bladeGrad)" stroke="#5d7f92" stroke-width="1.2"/>
+                    <line x1="30" y1="16" x2="30" y2="90"
+                          stroke="#6f97aa" stroke-width="1.2" opacity=".85"/>
+                    <path d="M10 97 L50 97 L45 106 L15 106 Z"
+                          fill="url(#goldGrad)" stroke="#8c6b32" stroke-width="1"/>
+                    <rect x="26" y="106" width="8" height="18" rx="2"
+                          fill="#2b1810" stroke="#8c6b32" stroke-width="1"/>
+                    <line x1="26" y1="111" x2="34" y2="111" stroke="#b99447" stroke-width="1"/>
+                    <line x1="26" y1="116" x2="34" y2="116" stroke="#b99447" stroke-width="1"/>
+                    <line x1="26" y1="121" x2="34" y2="121" stroke="#b99447" stroke-width="1"/>
+                    <circle cx="30" cy="130" r="6" fill="url(#goldGrad)" stroke="#8c6b32" stroke-width="1"/>
+                    <circle cx="30" cy="130" r="2.8" fill="#8ef6ff"/>
+                  </svg>
+                </div>
+
+                <div>
+                  <div class="cover-subtitle">Portfolio Of</div>
+                  <h1 class="cover-title">JHIMER JOHN<br>SABLAYA</h1>
+                  <div class="cover-subtitle" style="margin-top:8px;margin-bottom:0;">Web Developer&nbsp;|&nbsp;BS Information Technology Student</div>
+                </div>
+
+                <div class="cover-runes">NUEVA ECIJA UNIVERSITY OF SCIENCE AND TECHNOLOGY<br>TAP NEXT TO BEGIN</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+
+            <!-- ============ SPREAD 1 · LEFT : HOME / HERO ============ -->
+            <div class="page-face page-back parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="page-header-tag">Web Developer &amp; IT Student</div>
+                <div class="photo-frame-container">
+                  <div class="magic-photo-frame">
+                    <img src="me.png" alt="Jhimer John Sablaya"
+                         loading="lazy"
+                         onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&q=70';">
+                  </div>
+                  <div class="photo-name">JHIMER JOHN SABLAYA</div>
+                  <div class="photo-caption">"Sa mundo ng kadiliman, palagi mo dapat tandaan na ikaw ang magsisilbing liwanag patungo sa iyong pangarap."</div>
+                  <div class="photo-roles">Web Development &nbsp;|&nbsp; Database Management &nbsp;|&nbsp; Frontend Design</div>
+                </div>
+                <div class="page-footer-num">— I —</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ============ LEAF 1 : SPREAD 1 RIGHT / SPREAD 2 LEFT ============ -->
+        <div class="leaf" id="leaf1">
+          <div class="leaf-inner">
+            <div class="page-face page-front parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="story-top-section">
+                  <span class="chapter-number">SECTION 01</span>
+                  <h2 class="story-title">Welcome to My Portfolio</h2>
+                </div>
+                <div class="mobile-photo">
+                  <img src="introme.png" alt="Jhimer John Sablaya" loading="lazy">
+                </div>
+                <div class="story-body">
+                  <p>Hello! I am Jhimer John Sablaya, a 4th-year Information Technology student with a strong passion for web development. I specialize in building clean, functional, and user-friendly digital solutions.</p>
+                  <p>As a developer, I believe in continuous learning and using technology to solve real-world problems. My personal motto reminds me to be a guiding light in the dark, turning complex challenges into clear and elegant code. Explore my portfolio to see my technical skills, academic background, and the projects I have been working on.</p>
+                  <div class="skill-tags">
+                    <span class="skill-tag">Web Development</span>
+                    <span class="skill-tag">Database Management</span>
+                    <span class="skill-tag">Frontend Design</span>
+                  </div>
+                </div>
+                <div class="page-footer-num">Page 1 • Home</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+
+            <div class="page-face page-back parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="page-header-tag">Professional Background</div>
+                <div class="photo-frame-container">
+                  <div class="magic-photo-frame">
+                    <img src="gamer.png" alt="Jhimer John Sablaya — casual photo" loading="lazy">
+                  </div>
+                  <div class="photo-caption">"Focused on continuous learning and practical craft."</div>
+                  <div class="photo-roles">4th Year BSIT Student</div>
+                  <div class="photo-roles" style="color:#8c5d26;">Nueva Ecija University of Science and Technology</div>
+                </div>
+                <div class="page-footer-num">— II —</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ LEAF 2 : SPREAD 2 RIGHT / SPREAD 3 LEFT ============ -->
+        <div class="leaf" id="leaf2">
+          <div class="leaf-inner">
+            <div class="page-face page-front parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="story-top-section">
+                  <span class="chapter-number">SECTION 02</span>
+                  <h2 class="story-title">About Me</h2>
+                </div>
+                <div class="mobile-photo">
+                  <img src="gamer.png" alt="Jhimer John Sablaya — casual photo" loading="lazy">
+                </div>
+                <div class="story-body">
+                  <p>I am currently completing my Bachelor of Science in Information Technology at the Nueva Ecija University of Science and Technology (NEUST).</p>
+                  <p>I am a dedicated and adaptable student who enjoys the entire process of software and web development — from designing the user interface to structuring the backend databases. While I do not belong to a specific student organization, I focus my time and energy on mastering my craft, coding, and preparing for my professional career.</p>
+                  <p>I am highly motivated to take on new challenges and am currently preparing for my upcoming On-the-Job Training, where I aim to contribute my skills and learn from industry professionals.</p>
+                  <div class="skill-tags">
+                    <span class="skill-tag">BS Information Technology</span>
+                    <span class="skill-tag">NEUST</span>
+                    <span class="skill-tag">Continuous Learning</span>
+                  </div>
+                </div>
+                <div class="page-footer-num">Page 2 • About Me</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+
+            <div class="page-face page-back parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="page-header-tag">Technical Stack</div>
+                <div class="photo-frame-container">
+                  <div class="magic-photo-frame">
+                    <img src="cudeng.png" alt="Code on a screen" loading="lazy">
+                  </div>
+                  <div class="photo-caption">"Languages and tools I use to build the web."</div>
+                </div>
+                <div class="page-footer-num">— III —</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ LEAF 3 : SPREAD 3 RIGHT / SPREAD 4 LEFT ============ -->
+        <div class="leaf" id="leaf3">
+          <div class="leaf-inner">
+            <div class="page-face page-front parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="story-top-section">
+                  <span class="chapter-number">SECTION 03</span>
+                  <h2 class="story-title">My Technical Skills</h2>
+                </div>
+                <div class="mobile-photo">
+                  <img src="cudeng2.png" alt="Code on a screen" loading="lazy">
+                </div>
+                <div class="story-body">
+                  <p>I have hands-on experience with a variety of programming languages and tools essential for modern software and web development.</p>
+
+                  <div class="spell-list">
+                    <div class="spell-group">
+                      <span class="spell-head">Frontend Development</span>
+                      <ul>
+                        <li>HTML &amp; CSS — building responsive layouts</li>
+                        <li>JavaScript — adding interactivity</li>
+                      </ul>
+                    </div>
+
+                    <div class="spell-group">
+                      <span class="spell-head">Backend &amp; Database</span>
+                      <ul>
+                        <li>PHP &amp; MySQL — server-side logic and data management</li>
+                        <li>Python &amp; C++ — object-oriented programming and algorithms</li>
+                      </ul>
+                    </div>
+
+                    <div class="spell-group">
+                      <span class="spell-head">Development Tools</span>
+                      <ul>
+                        <li>Visual Studio Code</li>
+                        <li>Git &amp; GitHub — version control</li>
+                        <li>XAMPP — local server environment</li>
+                        <li>Figma — basic UI/UX wireframing</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="page-footer-num">Page 3 • Technical Skills</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+
+            <div class="page-face page-back parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="page-header-tag">Academic Background</div>
+                <div class="photo-frame-container">
+                  <div class="magic-photo-frame">
+                    <img src="edu.png" alt="University library" loading="lazy">
+                  </div>
+                  <div class="photo-caption">"A history of academic dedication."</div>
+                </div>
+                <div class="page-footer-num">— IV —</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ LEAF 4 : SPREAD 4 RIGHT / SPREAD 5 LEFT ============ -->
+        <div class="leaf" id="leaf4">
+          <div class="leaf-inner">
+            <div class="page-face page-front parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="story-top-section">
+                  <span class="chapter-number">SECTION 04</span>
+                  <h2 class="story-title">Educational Attainment</h2>
+                </div>
+                <div class="mobile-photo">
+                  <img src="edu2.png" alt="University library" loading="lazy">
+                </div>
+                <div class="story-body">
+                  <div class="edu-list">
+                    <div class="edu-item">
+                      <span class="edu-year">TERTIARY EDUCATION · 2022 – 2026</span>
+                      <span class="edu-school">Nueva Ecija University of Science and Technology (NEUST)</span>
+                      <span class="edu-note">Degree: BS Information Technology</span>
+                      <span class="edu-note">Relevant Coursework: Database Management, Web Development, Networking, Systems Analysis and Design.</span>
+                    </div>
+
+                    <div class="edu-item">
+                      <span class="edu-year">SENIOR HIGH SCHOOL · 2020 – 2022</span>
+                      <span class="edu-school">General Mamerto Natividad National High School</span>
+                      <span class="edu-note">Track: TVL–ICT</span>
+                      <span class="edu-note">Awards: With Honors, Most Respectful</span>
+                    </div>
+
+                    <div class="edu-item">
+                      <span class="edu-year">JUNIOR HIGH SCHOOL · 2016 – 2020</span>
+                      <span class="edu-school">St. Paul School General Natividad</span>
+                      <span class="edu-note">Completed junior secondary education.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="page-footer-num">Page 4 • Education</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+
+            <div class="page-face page-back parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="page-header-tag">Capstone Project</div>
+                <div class="photo-frame-container">
+                  <div class="magic-photo-frame">
+                    <img src="cap.png" alt="System dashboard mockup" loading="lazy">
+                  </div>
+                  <div class="photo-caption">"Bongabon LifeLink — a web-based community system."</div>
+                </div>
+                <div class="page-footer-num">— V —</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ LEAF 5 : SPREAD 5 RIGHT / SPREAD 6 LEFT ============ -->
+        <div class="leaf" id="leaf5">
+          <div class="leaf-inner">
+            <div class="page-face page-front parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="story-top-section">
+                  <span class="chapter-number">SECTION 05</span>
+                  <h2 class="story-title">Featured Project: Bongabon LifeLink</h2>
+                </div>
+                <div class="mobile-photo">
+                  <img src="cap2.png" alt="System dashboard mockup" loading="lazy">
+                </div>
+                <div class="story-body">
+                  <p>For my final academic requirement, I am developing a Capstone Project titled "Bongabon LifeLink."</p>
+                  <p>This project is a web-based system designed to address specific needs within the community of Bongabon. It focuses on streamlining processes, ensuring data accuracy, and providing a reliable digital platform for its users. Through this project, I am applying my skills in system architecture, database management, and web development to create a practical, real-world solution.</p>
+                  <div class="skill-tags">
+                    <span class="skill-tag">System Architecture</span>
+                    <span class="skill-tag">Database Management</span>
+                    <span class="skill-tag">Web Development</span>
+                  </div>
+                </div>
+                <div class="page-footer-num">Page 5 • Featured Project</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+
+            <div class="page-face page-back parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="page-header-tag">Professional Readiness</div>
+                <div class="photo-frame-container">
+                  <div class="magic-photo-frame">
+                    <img src="ojt.png" alt="Workstation ready for professional work" loading="lazy">
+                  </div>
+                  <div class="photo-caption">"Seeking OJT Opportunities · 2nd Semester."</div>
+                  <div class="photo-roles">Fast learner &nbsp;•&nbsp; Adaptable &nbsp;•&nbsp; Team-ready</div>
+                </div>
+                <div class="page-footer-num">— VI —</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ LEAF 6 : SPREAD 6 RIGHT / SPREAD 7 LEFT ============ -->
+        <div class="leaf" id="leaf6">
+          <div class="leaf-inner">
+            <div class="page-face page-front parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="story-top-section">
+                  <span class="chapter-number">SECTION 06</span>
+                  <h2 class="story-title">OJT &amp; Career Objective</h2>
+                </div>
+                <div class="mobile-photo">
+                  <img src="ojt2.png" alt="Workstation ready for professional work" loading="lazy">
+                </div>
+                <div class="story-body">
+                  <p>While I have not yet completed my formal On-the-Job Training, I am actively preparing for my internship in the upcoming second semester.</p>
+                  <p>I am seeking an environment where I can apply my programming skills, assist in real-world projects, and learn from experienced developers. I am a fast learner, adaptable to new technologies, and ready to prove my dedication to the IT industry.</p>
+                  <p>I am looking forward to contributing to a professional team and gaining the valuable experience needed to transition from a student to a full-fledged professional.</p>
+                  <div class="skill-tags">
+                    <span class="skill-tag">On-the-Job Training</span>
+                    <span class="skill-tag">Fast Learner</span>
+                    <span class="skill-tag">Team Player</span>
+                  </div>
+                </div>
+                <div class="page-footer-num">Page 6 • OJT</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+
+            <div class="page-face page-back parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="page-header-tag">Get In Touch</div>
+                <div class="photo-frame-container">
+                  <div class="magic-photo-frame">
+                    <img src="find.png" alt="Laptop with email icon" loading="lazy">
+                  </div>
+                  <div class="photo-caption">"Let's connect and build something great."</div>
+                </div>
+                <div class="page-footer-num">— VII —</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ LEAF 7 : SPREAD 7 RIGHT / BACK COVER ============ -->
+        <div class="leaf" id="leaf7">
+          <div class="leaf-inner">
+            <div class="page-face page-front parchment-page">
+              <div class="paper-grain"></div>
+              <div class="page-border">
+                <div class="story-top-section">
+                  <span class="chapter-number">SECTION 07</span>
+                  <h2 class="story-title">Contact Information</h2>
+                </div>
+                <div class="mobile-photo">
+                  <img src="find2.png" alt="Laptop with email icon" loading="lazy">
+                </div>
+                <div class="story-body">
+                  <p>If you are looking for an OJT intern or a junior web developer, or if you simply want to connect, feel free to reach out.</p>
+                  <div class="edu-list">
+                    <div class="edu-item">
+                      <span class="edu-year">LOCATION</span>
+                      <span class="edu-school">General natividad, Nueva Ecija, Philippines</span>
+                    </div>
+                    <div class="edu-item">
+                      <span class="edu-year">EMAIL</span>
+                      <span class="edu-school">jhimerjohnsablaya@gmail.com</span>
+                    </div>
+                    <div class="edu-item">
+                      <span class="edu-year">PHONE</span>
+                      <span class="edu-school">09953987450</span>
+                    </div>
+                    <div class="edu-item">
+                      <span class="edu-year">GITHUB</span>
+                      <span class="edu-school">github.com/chimjiee</span>
+                    </div>
+                    <div class="edu-item">
+                      <span class="edu-year">DISCORD</span>
+                      <span class="edu-school">https://discord.com/users/917766299424268289</span>
+                    </div>
+                  </div>
+                  <p style="text-align:center;font-style:italic;">Thank you for visiting my portfolio. Let's create clean and effective digital solutions together.</p>
+                </div>
+                <div class="page-footer-num">Page 7 • Contact</div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+
+            <!-- BACK COVER -->
+            <div class="page-face page-back grimoire-cover">
+              <div class="cover-frame">
+                <div class="cover-runes">✦ THANK YOU · PORTFOLIO ✦</div>
+
+                <div class="cover-sword" aria-hidden="true">
+                  <svg viewBox="0 0 60 140">
+                    <defs>
+                      <linearGradient id="bladeGrad2" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%"   stop-color="#8fb6c9"/>
+                        <stop offset="42%"  stop-color="#f4fbff"/>
+                        <stop offset="58%"  stop-color="#f4fbff"/>
+                        <stop offset="100%" stop-color="#7fa8bd"/>
+                      </linearGradient>
+                      <linearGradient id="goldGrad2" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%"   stop-color="#8c6b32"/>
+                        <stop offset="45%"  stop-color="#ffeaa7"/>
+                        <stop offset="100%" stop-color="#b99447"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M30 5 L38 24 L38 92 L30 101 L22 92 L22 24 Z"
+                          fill="url(#bladeGrad2)" stroke="#5d7f92" stroke-width="1.2"/>
+                    <line x1="30" y1="16" x2="30" y2="90"
+                          stroke="#6f97aa" stroke-width="1.2" opacity=".85"/>
+                    <path d="M10 97 L50 97 L45 106 L15 106 Z"
+                          fill="url(#goldGrad2)" stroke="#8c6b32" stroke-width="1"/>
+                    <rect x="26" y="106" width="8" height="18" rx="2"
+                          fill="#2b1810" stroke="#8c6b32" stroke-width="1"/>
+                    <line x1="26" y1="111" x2="34" y2="111" stroke="#b99447" stroke-width="1"/>
+                    <line x1="26" y1="116" x2="34" y2="116" stroke="#b99447" stroke-width="1"/>
+                    <line x1="26" y1="121" x2="34" y2="121" stroke="#b99447" stroke-width="1"/>
+                    <circle cx="30" cy="130" r="6" fill="url(#goldGrad2)" stroke="#8c6b32" stroke-width="1"/>
+                    <circle cx="30" cy="130" r="2.8" fill="#8ef6ff"/>
+                  </svg>
+                </div>
+
+                <div>
+                  <div class="cover-subtitle">Let's Build Something Great</div>
+                  <h2 class="cover-title" style="font-size:.86em;">THANK YOU<br>FOR VISITING</h2>
+                </div>
+
+                <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+                  <div class="cover-runes">JHIMER JOHN SABLAYA</div>
+                  <button class="back-cover-about" type="button" onclick="openAbout()">ABOUT ME</button>
+                </div>
+              </div>
+              <div class="face-shade"></div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="book-controls">
+    <button class="nav-btn" id="prevBtn" type="button" disabled>
+      <span>◀</span> BACK
+    </button>
+    <div class="page-indicator" id="pageIndicator">Cover</div>
+    <button class="nav-btn" id="nextBtn" type="button">
+      NEXT <span>▶</span>
+    </button>
+  </div>
+</main>
+
+<!-- =========================================================
+     5. FOOTER
+     ========================================================= -->
+<footer class="chapter-footer">
+  <div class="footer-left">
+    <div class="hud-pill" id="hudChapterName">SECTION: COVER</div>
+  </div>
+
+  <div class="footer-info">
+    <div class="footer-chapter" id="footerChapter">Jhimer John Sablaya · Portfolio</div>
+    <div class="footer-rule"></div>
+    <p class="footer-desc" id="footerDesc">Web Developer and BS Information Technology student — turn the page to begin.</p>
+  </div>
+
+  <div class="footer-actions">
+    <button class="footer-btn" id="contactBtn" type="button" aria-haspopup="dialog">CONTACT</button>
+    <button class="footer-btn" id="aboutBtn" type="button" aria-haspopup="dialog">ABOUT</button>
+  </div>
+</footer>
+
+<!-- =========================================================
+     6. ABOUT MODAL
+     ========================================================= -->
+<div class="contact-backdrop" id="aboutModal" role="dialog" aria-modal="true">
+  <div class="contact-card">
+    <button class="contact-close" id="aboutClose" type="button" aria-label="Close about">✕</button>
+
+    <div class="contact-frame">
+      <h2 class="about-title">ABOUT ME</h2>
+      <div class="contact-rune">✦ PROFILE · SUMMARY ✦</div>
+
+      <div class="about-sword" aria-hidden="true">
+        <svg viewBox="0 0 60 140">
+          <defs>
+            <linearGradient id="aboutBlade" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="#8fb6c9"/>
+              <stop offset="42%"  stop-color="#f4fbff"/>
+              <stop offset="58%"  stop-color="#f4fbff"/>
+              <stop offset="100%" stop-color="#7fa8bd"/>
+            </linearGradient>
+            <linearGradient id="aboutGold" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="#8c6b32"/>
+              <stop offset="45%"  stop-color="#ffeaa7"/>
+              <stop offset="100%" stop-color="#b99447"/>
+            </linearGradient>
+          </defs>
+          <path d="M30 5 L38 24 L38 92 L30 101 L22 92 L22 24 Z"
+                fill="url(#aboutBlade)" stroke="#5d7f92" stroke-width="1.2"/>
+          <line x1="30" y1="16" x2="30" y2="90"
+                stroke="#6f97aa" stroke-width="1.2" opacity=".85"/>
+          <path d="M10 97 L50 97 L45 106 L15 106 Z"
+                fill="url(#aboutGold)" stroke="#8c6b32" stroke-width="1"/>
+          <rect x="26" y="106" width="8" height="18" rx="2"
+                fill="#2b1810" stroke="#8c6b32" stroke-width="1"/>
+          <line x1="26" y1="111" x2="34" y2="111" stroke="#b99447" stroke-width="1"/>
+          <line x1="26" y1="116" x2="34" y2="116" stroke="#b99447" stroke-width="1"/>
+          <line x1="26" y1="121" x2="34" y2="121" stroke="#b99447" stroke-width="1"/>
+          <circle cx="30" cy="130" r="6" fill="url(#aboutGold)" stroke="#8c6b32" stroke-width="1"/>
+          <circle cx="30" cy="130" r="2.8" fill="#8ef6ff"/>
+        </svg>
+      </div>
+
+      <div class="contact-name">Jhimer John Sablaya</div>
+      <div class="about-class">Web Developer · BS Information Technology</div>
+
+      <div class="contact-rule"></div>
+
+      <p class="contact-desc">
+        A 4th-year Information Technology student at Nueva Ecija University of Science
+        and Technology with a strong passion for web development. I build clean,
+        functional, and user-friendly digital solutions, and I am currently preparing
+        for my On-the-Job Training to gain real-world industry experience.
+      </p>
+
+      <div class="about-tags">
+        <span class="about-tag">HTML / CSS</span>
+        <span class="about-tag">JavaScript</span>
+        <span class="about-tag">PHP / MySQL</span>
+        <span class="about-tag">Python / C++</span>
+        <span class="about-tag">Git &amp; GitHub</span>
+        <span class="about-tag">Figma</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     7. CONTACT MODAL
+     ========================================================= -->
+<div class="contact-backdrop" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactGmail">
+  <div class="contact-card">
+    <button class="contact-close" id="contactClose" type="button" aria-label="Close contact">✕</button>
+
+    <div class="contact-frame">
+      <div class="contact-rune">✦ CONTACT · DETAILS ✦</div>
+
+      <div class="contact-shield" aria-hidden="true">
+        <svg viewBox="0 0 64 76">
+          <defs>
+            <linearGradient id="shieldRim" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#8c6b32"/>
+              <stop offset="45%" stop-color="#ffeaa7"/>
+              <stop offset="100%" stop-color="#b99447"/>
+            </linearGradient>
+            <linearGradient id="shieldBody" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4a2315"/>
+              <stop offset="55%" stop-color="#2a1109"/>
+              <stop offset="100%" stop-color="#120603"/>
+            </linearGradient>
+            <radialGradient id="shieldGem" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="40%" stop-color="#8ef6ff"/>
+              <stop offset="100%" stop-color="#126b82"/>
+            </radialGradient>
+          </defs>
+          <path d="M32 3 L58 11 L58 38 Q58 60 32 73 Q6 60 6 38 L6 11 Z"
+                fill="url(#shieldBody)" stroke="url(#shieldRim)" stroke-width="2.4"/>
+          <path d="M32 10 L51 16 L51 38 Q51 55 32 65 Q13 55 13 38 L13 16 Z"
+                fill="none" stroke="url(#shieldRim)" stroke-width="1" opacity=".55"/>
+          <line x1="32" y1="17" x2="32" y2="58" stroke="url(#shieldRim)" stroke-width="2.2"/>
+          <line x1="20" y1="30" x2="44" y2="30" stroke="url(#shieldRim)" stroke-width="2.2"/>
+          <circle cx="32" cy="30" r="4.5" fill="url(#shieldGem)"
+                  stroke="#8c6b32" stroke-width=".8"/>
+        </svg>
+      </div>
+
+      <div class="contact-name">Jhimer John Sablaya</div>
+
+      <a class="contact-gmail" id="contactGmail" href="mailto:jhimerjohnsablaya@gmail.com">
+        jhimerjohnsablaya@gmail.com
+      </a>
+
+      <div class="contact-rule"></div>
+
+      <p class="contact-desc">
+        Open to On-the-Job Training opportunities and junior web developer roles.
+        Feel free to reach out for collaboration, project inquiries, or a simple
+        professional connection.
+      </p>
+
+      <div class="contact-actions">
+        <a class="nav-btn" href="mailto:jhimerjohn.sablaya@gmail.com">✉ &nbsp;SEND AN EMAIL</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ==========================================================
+     ELEMENT REFS
+     ========================================================== */
+  const leaves        = Array.prototype.slice.call(document.querySelectorAll('.leaf'));
+  const bookViewport  = document.getElementById('bookViewport');
+  const spellGlow     = document.getElementById('spellGlow');
+  const spellFlash    = document.getElementById('spellFlash');
+  const prevBtn       = document.getElementById('prevBtn');
+  const nextBtn       = document.getElementById('nextBtn');
+  const pageIndicator = document.getElementById('pageIndicator');
+  const hudChapterName= document.getElementById('hudChapterName');
+  const footerChapter = document.getElementById('footerChapter');
+  const footerDesc    = document.getElementById('footerDesc');
+  const chapterBtns   = Array.prototype.slice.call(document.querySelectorAll('.chapter-btn[data-spread]'));
+  const drawer        = document.getElementById('chapterDrawer');
+  const backdrop      = document.getElementById('drawerBackdrop');
+  const contactModal  = document.getElementById('contactModal');
+  const aboutModal    = document.getElementById('aboutModal');
+
+  const TOTAL = leaves.length;   /* 8 leaves → 9 spreads */
+  let current = 0;
+  let animating = false;
+
+  /* ==========================================================
+     COPY  (9 spreads)
+     ========================================================== */
+  const spreadShort = [
+    'Cover',
+    'Home',
+    'About Me',
+    'Skills',
+    'Education',
+    'Project',
+    'OJT',
+    'Contact',
+    'Back Cover'
+  ];
+
+  const spreadTitles = [
+    'Jhimer John Sablaya · Portfolio',
+    'Section 01 · Welcome to My Portfolio',
+    'Section 02 · About Me',
+    'Section 03 · My Technical Skills',
+    'Section 04 · Educational Attainment',
+    'Section 05 · Featured Project: Bongabon LifeLink',
+    'Section 06 · OJT & Career Objective',
+    'Section 07 · Contact Information',
+    'Thank You · Let\'s Connect'
+  ];
+
+  const spreadDescs = [
+    'Web Developer and BS Information Technology student — turn the page to begin.',
+    'An introduction to who I am, what I build, and the mindset behind my work.',
+    '4th-year BSIT student at NEUST, focused on continuous learning and practical craft.',
+    'The languages, frameworks, and development tools I use to build for the web.',
+    'Tertiary, senior high, and junior high milestones — a record of academic dedication.',
+    'Bongabon LifeLink — a web-based system applying architecture, databases, and development.',
+    'Preparing for On-the-Job Training and a professional career in the IT industry.',
+    'Open to OJT opportunities and junior developer roles — let\'s connect.',
+    'Thank you for visiting. Clean and effective digital solutions, built together.'
+  ];
+
+  /* ==========================================================
+     MAGIC EFFECTS
+     ========================================================== */
+  let glowTimer = null, flashTimer = null;
+
+  function burst () {
+    spellGlow.classList.add('burst');
+    spellFlash.classList.remove('fire');
+    void spellFlash.offsetWidth;
+    spellFlash.classList.add('fire');
+
+    clearTimeout(glowTimer);
+    glowTimer = setTimeout(function(){ spellGlow.classList.remove('burst'); }, 700);
+
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(function(){ spellFlash.classList.remove('fire'); }, 800);
+  }
+
+  const turnTimers = new WeakMap();
+  function markTurning (index) {
+    const leaf = leaves[index];
+    if (!leaf) return;
+    leaf.classList.add('turning');
+    clearTimeout(turnTimers.get(leaf));
+    turnTimers.set(leaf, setTimeout(function(){ leaf.classList.remove('turning'); }, 900));
+  }
+
+  /* ==========================================================
+     RENDER
+     ========================================================== */
+  function render (turnIndex) {
+    burst();
+    if (typeof turnIndex === 'number') markTurning(turnIndex);
+
+    bookViewport.classList.toggle('open-spread', current > 0 && current < TOTAL);
+    bookViewport.classList.toggle('closed-back', current === TOTAL);
+
+    for (let i = 0; i < TOTAL; i++) {
+      const leaf = leaves[i];
+      const flipped = i < current;
+      if (leaf.classList.contains('flipped') !== flipped) {
+        leaf.classList.toggle('flipped', flipped);
+      }
+      leaf.style.zIndex = flipped ? (i + 1) : (TOTAL - i + 10);
+    }
+
+    prevBtn.disabled = (current === 0);
+    nextBtn.disabled = (current === TOTAL);
+
+    pageIndicator.textContent = spreadShort[current];
+    hudChapterName.textContent = 'SECTION: ' + spreadShort[current].toUpperCase();
+    footerChapter.textContent = spreadTitles[current];
+    footerDesc.textContent = spreadDescs[current];
+
+    for (let i = 0; i < chapterBtns.length; i++) {
+      chapterBtns[i].classList.toggle('active', Number(chapterBtns[i].dataset.spread) === current);
+    }
+  }
+
+  /* ==========================================================
+     NAVIGATION
+     ========================================================== */
+  function nextPage () {
+    if (current >= TOTAL || animating) return;
+    animating = true;
+    const turningLeaf = current;
+    current++;
+    render(turningLeaf);
+    setTimeout(function(){ animating = false; }, 420);
+  }
+
+  function prevPage () {
+    if (current <= 0 || animating) return;
+    animating = true;
+    const turningLeaf = current - 1;
+    current--;
+    render(turningLeaf);
+    setTimeout(function(){ animating = false; }, 420);
+  }
+
+  function goToSpread (target) {
+    target = Math.max(0, Math.min(TOTAL, Number(target) || 0));
+    if (target === current) { closeDrawer(); return; }
+
+    const from = Math.min(current, target);
+    const to   = Math.max(current, target);
+    for (let i = from; i < to; i++) markTurning(i);
+
+    current = target;
+    render();
+    closeDrawer();
+  }
+
+  /* ==========================================================
+     DRAWER
+     ========================================================== */
+  function openDrawer () {
+    drawer.classList.add('open');
+    backdrop.classList.add('show');
+  }
+  function closeDrawer () {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('show');
+  }
+
+  document.getElementById('openMenuBtn').addEventListener('click', openDrawer);
+  document.getElementById('closeMenuBtn').addEventListener('click', closeDrawer);
+  backdrop.addEventListener('click', closeDrawer);
+
+  chapterBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () { goToSpread(btn.dataset.spread); });
+  });
+
+  /* ==========================================================
+     CONTACT MODAL
+     ========================================================== */
+  function openContact () {
+    closeDrawer();
+    aboutModal.classList.remove('show');
+    contactModal.classList.add('show');
+  }
+  function closeContact () {
+    contactModal.classList.remove('show');
+  }
+
+  document.getElementById('contactBtn').addEventListener('click', openContact);
+  document.getElementById('drawerContactBtn').addEventListener('click', openContact);
+  document.getElementById('contactClose').addEventListener('click', closeContact);
+
+  contactModal.addEventListener('click', function (e) {
+    if (e.target === contactModal) closeContact();
+  });
+
+  /* ==========================================================
+     ABOUT MODAL
+     ========================================================== */
+  function openAbout () {
+    closeDrawer();
+    contactModal.classList.remove('show');
+    aboutModal.classList.add('show');
+  }
+  function closeAbout () {
+    aboutModal.classList.remove('show');
+  }
+
+  /* expose for the back-cover button */
+  window.openAbout = openAbout;
+
+  document.getElementById('aboutBtn').addEventListener('click', openAbout);
+  document.getElementById('drawerAboutBtn').addEventListener('click', openAbout);
+  document.getElementById('aboutClose').addEventListener('click', closeAbout);
+
+  aboutModal.addEventListener('click', function (e) {
+    if (e.target === aboutModal) closeAbout();
+  });
+
+  /* ==========================================================
+     INPUT — buttons, keys, swipe
+     ========================================================== */
+  prevBtn.addEventListener('click', prevPage);
+  nextBtn.addEventListener('click', nextPage);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      closeContact();
+      closeAbout();
+      closeDrawer();
+      return;
+    }
+    if (contactModal.classList.contains('show')) return;
+    if (aboutModal.classList.contains('show')) return;
+
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextPage(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prevPage(); }
+  });
+
+  let tX = 0, tY = 0, tTime = 0;
+  document.addEventListener('touchstart', function (e) {
+    tX = e.touches[0].clientX;
+    tY = e.touches[0].clientY;
+    tTime = Date.now();
+  }, { passive: true });
+
+  document.addEventListener('touchend', function (e) {
+    if (contactModal.classList.contains('show')) return;
+    if (aboutModal.classList.contains('show')) return;
+    const dx = e.changedTouches[0].clientX - tX;
+    const dy = e.changedTouches[0].clientY - tY;
+    const dt = Date.now() - tTime;
+
+    if (dt < 700 && Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.6) {
+      if (dx < 0) nextPage(); else prevPage();
+    }
+  }, { passive: true });
+
+  /* tap a leaf to flip */
+  leaves.forEach(function (leaf, i) {
+    leaf.addEventListener('click', function (e) {
+      if (e.target.closest('.story-body')) return;
+      if (e.target.closest('button')) return;
+      if (i === current) nextPage();
+      else if (i === current - 1) prevPage();
+    });
+  });
+
+  /* ==========================================================
+     FLOATING PARTICLES
+     ========================================================== */
+  (function createParticles () {
+    const host = document.getElementById('particles');
+    const isSmall = window.innerWidth < 760;
+    const count = isSmall ? 8 : 14;
+    const frag = document.createDocumentFragment();
+
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 6 + 3;
+      p.style.width  = size + 'px';
+      p.style.height = size + 'px';
+      p.style.left   = (Math.random() * 100) + 'vw';
+      p.style.animationDuration = (Math.random() * 9 + 8) + 's';
+      p.style.animationDelay    = (Math.random() * 8) + 's';
+      p.style.opacity = (Math.random() * 0.35 + 0.30).toFixed(2);
+      frag.appendChild(p);
+    }
+    host.appendChild(frag);
+  })();
+
+  /* ==========================================================
+     INIT
+     ========================================================== */
+  render();
+})();
+</script>
+</body>
+</html>
